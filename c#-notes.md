@@ -2,7 +2,7 @@
 
 ## Keyword Definitions
 
-This summarises definitions for unusual keywords I encountered while working with c# code that I did not intrinsicly know what they implied.
+This summarises definitions for unusual keywords I encountered while working with c# code that were foreign to me.
 
 - `partial` - a keyword that allows a class, struct, or interface definition to be split between multiple files. See [here](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods) for more information
 

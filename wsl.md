@@ -1,4 +1,16 @@
-# wsl.md
+# WSL2
+
+## VPN Connection
+
+When connecting via Cisco AnyConnect the WSL2 environment loses internet connectivity.
+
+[This](https://gist.github.com/machuu/7663aa653828d81efbc2aaad6e3b1431) git hub gist explains the work around
+
+```powershell
+Get-NetAdapter | Where-Object {$_.InterfaceDescription -Match "Cisco AnyConnect"} | Set-NetIPInterface -InterfaceMetric 6000
+```
+
+Made a script with a permenant alias based on info [here](https://stackoverflow.com/questions/24914589/how-to-create-permanent-powershell-aliases)
 
 ## Windows Environment Variables
 
