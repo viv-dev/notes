@@ -149,6 +149,13 @@ Register the eslint prettier plugins to eslint config:
 }
 ```
 
+To format everything so it's compliant:
+
+```bash
+npm install -g prettier
+prettier --write .
+```
+
 TODO:
 Add formatting/linting pre-commit/push hook
 
