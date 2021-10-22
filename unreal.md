@@ -42,4 +42,3 @@ You can also see the modules provided as part of Unreal under the `Source` folde
 - ThirdParty: Code and libraries from external third parties
 
 Note: The UE4 EULA prohibits inclusion of Editor modules in shipping games and apps
-
