@@ -4,7 +4,7 @@
 
 ### Cluster
 
-This is a collection of nodes - each able to spin up multiple instances of the pods that make up an application. They share services, so an instance of a pod can be accessed by any other pod on any other node.
+This is a collection of nodes - each able to spin up multiple instances of the pods that make up an application. They share services, so an instance of a pod can be accessed by any other pod on any other node in the cluster.
 
 ### Node
 
@@ -18,7 +18,7 @@ Each pod gets it's own IP address - however they are designed to be 'ephemeral',
 
 ### Service
 
-A service is a static IP address that is attached to each pod. The lifecycle of the service and the pod are not connected, so if the pod dies the service will remain and the new pod can be attached to the same IP address.
+A service is a static IP address that is attached to each pod. The lifecycle of the service and the pod are not connected, so if the pod dies the service will remain and the new pod can be attached to the same service. As such, services are the primary method for exposing communication to a pod, as a service
 
 In a cluster, the service will also map pods accross nodes and act as a load balancer, directing a request from one pod to the most suitable pod instance currently running.
 

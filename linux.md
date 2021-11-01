@@ -21,6 +21,7 @@ groups
 groups <username>
 ```
 
+
 ## Useful Utilities
 
 #### **xargs**
@@ -63,3 +64,7 @@ A stream editor that can perform basic text manipulation (e.g. fine, replace, in
 Sorts the contents of a text file. The sorting type and direction can be modified using options.
 
 `TODO: Add examples`
+
+#### **wc**
+
+Counts the number of lines in a file/standard input.
