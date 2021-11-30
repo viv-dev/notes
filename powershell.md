@@ -4,12 +4,6 @@
 
 [PowerShell For Beginners Full Course](https://www.youtube.com/watch?v=UVUd9_k9C6A))
 
-## Purpose of Powershell
-
-- Improved management and automation
-- Manage real-time
-- Manages large scale
-
 ## Versions
 
 To show version in the shell:
@@ -18,7 +12,7 @@ To show version in the shell:
 (Get-Host).Version
 ```
 
-Latest version as of June 2021, latest version is 7, default installed on Windows is 5.1.
+Latest version as of June 2021 is 7, default installed on Windows is 5.1.
 
 ## Aliases
 

@@ -42,3 +42,61 @@ You can also see the modules provided as part of Unreal under the `Source` folde
 - ThirdParty: Code and libraries from external third parties
 
 Note: The UE4 EULA prohibits inclusion of Editor modules in shipping games and apps
+
+If your project or plugin module depends on other modules, they must be added to your modules `.Build.cs` file.
+
+## Unreal Macros
+
+Unreal Engine C++ codebase uses a custom preprocessor, called the `Unreal Header Tool (UHT)` which generates custom Runtime Type Information (RTTI) from your C++ code. This is paired with a series of macros, which the UHT uses to generate special versions of the class that include additonal metadata that allows a form of 'reflection' to be performed at runtime.
+
+Macros include (taken from (here)[https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/ProgrammingWithCPP/IntroductionToCPP/]):
+
+- UCLASS() — Used to tell Unreal to generate reflection data for a class. The class must derive from UObject.
+- USTRUCT() — Used to tell Unreal to generate reflection data for a struct.
+- GENERATED_BODY() — UE4 replaces this with all the necessary boilerplate code that gets generated for the type.
+- UPROPERTY() — Enables a member variable of a UCLASS or a USTRUCT to be used as a UPROPERTY. A UPROPERTY has many uses. It can allow the variable to be replicated, serialized, and accessed from Blueprints. They are also used by the garbage collector to keep track of how many references there are to a UObject.
+- UFUNCTION() — Enables a class method of a UCLASS or a USTRUCT to be used as a UFUNCTION. A UFUNCTION can allow the class method to be called from Blueprints and used as RPCs, among other things.
+
+## Unreal Char/Strings
+
+Unreal defines it's own `TCHAR` type to handle different platform encodings for a char. When allocating a string literal to a `TCHAR *`, it should be done using the `TEXT()` macro in order to ensure it is specified in the correct encoding type for the underlying char type used by the platform. That is:
+
+```c++
+const TCHAR * some_string = TEXT("Some Text")
+```
+
+## Unreal HTTP
+
+Unreal provides it's own HTTP client for being able to interact with web services. In order to use it, you must add the appropriate dependencies to your `.Build.cs` files:
+
+```c#
+    PrivateDependencyModuleNames.AddRange(
+        new string[]
+        {
+            ... // Other project dependencies
+            "Http",
+            "Json",
+            "JsonUtilities"
+        }
+    );
+```
+
+## Adding an Editor Settings Page
+
+Reference (here)[https://nerivec.github.io/old-ue4-wiki/pages/customsettings.html].
+
+To hide properties based on other settings, see (this)[https://benui.ca/unreal/uproperty-edit-condition-can-edit-change/].
+
+To create enum drop downs that have a different name to the enum variable name, you can use the `UMETA` macro in addition to the `UENUM` macro:
+
+```c++
+UENUM()
+enum class InfluxDBVersion {
+	V1 UMETA(DisplayName = "v1.8"),
+	V2 UMETA(DisplayName = "v2.0")
+};
+```
+
+## Adding Custom Log Category
+
+Reference (here)[https://blog.jamie.holdings/2020/04/21/unreal-engine-4-custom-log-categories/]
