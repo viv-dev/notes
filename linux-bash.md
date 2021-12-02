@@ -1,5 +1,7 @@
 # bash
 
+[Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/index.html#SEC_Contents)
+
 ## Modify the Behaviour of the Shell
 
 You can set shell options at the top of a script file in order to modify the behaviour the shell. See [here](https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html) for a comprehensive list of options, but some of the most common/useful are as follows:
@@ -23,7 +25,16 @@ ARGS=("$@")
 
 ```
 
+## Bash Builtins
+
+#### **test**
+
+`test` returns an exit status of 0 for true and 1 for false. Can be used to quickly test expressions, and combined with set -e can exit out of scripts upon critical failures.
+
+[Reference](https://www.computerhope.com/unix/bash/test.htm)
+
 ## Useful Utilities
+
 #### **xargs**
 
 A command line utility for building execution pipelines from standard input. It allows tools like `echo`, `rm` and `mkdir` to accept standard input as arguments.
@@ -68,4 +79,3 @@ Sorts the contents of a text file. The sorting type and direction can be modifie
 #### **wc**
 
 Counts the number of lines in a file/standard input.
-
