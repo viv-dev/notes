@@ -14,11 +14,11 @@ Largest unit in a Kubernetes cluster. Can be a physical machine, virtual machine
 
 Smallest unit of kubernetes. It is an abstraction layer over the top of the containerisation platform. Multiple containers in theory can run in a pod, but it's best practice to limit it to one container per pod.
 
-Each pod gets it's own IP address - however they are designed to be 'ephemeral', so if the application inside crashes, Kubernetes will create a new instance of the pod... with a new IP address. Pods live in an internal virtual network.
+Each pod gets it's own IP address - however they are designed to be 'ephemeral', so if the application inside crashes, Kubernetes will create a new instance of the pod... with a new IP address (see services for how this is managed when needing to maintain communication between pods). Pods live in an internal virtual network.
 
 ### Service
 
-A service is a static IP address that is attached to each pod. The lifecycle of the service and the pod are not connected, so if the pod dies the service will remain and the new pod can be attached to the same service. As such, services are the primary method for exposing communication to a pod, as a service
+A service is a static IP address that is attached to each pod. The lifecycle of the service and the pod are not connected, so if the pod dies the service will remain and the new pod can be attached to the same service. As such, services are the primary method for exposing communication to a pod, as a service does maintain a consistent IP address.
 
 In a cluster, the service will also map pods accross nodes and act as a load balancer, directing a request from one pod to the most suitable pod instance currently running.
 
@@ -28,17 +28,17 @@ Since the pods live inside their own virtual network, if you want to access a se
 
 Ingress maps a nice external domain/port combination to an internal service.
 
-### ConfigMap 
+### ConfigMap
 
 The purpose of this is to handle configuration for a set of pods - e.g. a front end application needs to be configured with the URL the database.
 
-This is what you use to wire pods together through the services.
+This is what you use to wire pods together through services.
 
-Not intended to hold sensitive data like usernames/passwords/tokens etc!
+> NOTE: this is not intended to hold sensitive data like usernames/passwords/tokens etc!
 
 ### Secret
 
-Like above, but designed to hold sensitive configuration data. Stores all values in base64 encoded format (wait, really?).
+Like above, but designed to hold sensitive configuration data. Stores all values in base64 encoded format.
 
 > NOTE: Both Secrets and ConfigMap can be exposed to the app in a pod by either environment variables or a properties file.
 
@@ -48,13 +48,13 @@ Volumes are used to manage persistent data that needs to survive a pod dying and
 
 Storage for volumes can be a local hard drive, or even a remote network storage solution (depends on the deployment environment).
 
-### StatefulSet 
+### StatefulSet
 
 When running pods across multiple nodes in a cluster, in order to share the same state they will need to read from the same persistent storage volume. There therefore needs to be some arbiter who decides which pod can be accessing a particular part of a volume at any time.
 
 This is only required for applications/pods that require such persistent data - such as databases.
 
-However, statefulSet is apparantley a pain to set up - herefore databases are often hosted outside of a Kubernetes cluster for this reason.
+However, statefulSet is apparantley a pain to set up and manage - therefore databases are often hosted outside of a Kubernetes cluster for this reason.
 
 ### Deployment
 
@@ -88,7 +88,6 @@ Anything below a `deployment` should be managed by kubernetes, and so our focus 
 You create a deployment for each seperate pod/image (unlike docker compose where you can declare multiple containers in one file). To create a deployment, you can use the following command:
 
 `kubectl create deployment <deployment-name> --image=<image-name>`
-
 
 To edit an already deployed deployment:
 
@@ -128,7 +127,7 @@ To inspect the log output of a running pod you can use the following command:
 
 ## Secret
 
-In order to reference a secret in a deployment configuration file, the secret must be created before hand. 
+In order to reference a secret in a deployment configuration file, the secret must be created before hand.
 
 From a kubernetes secret file, you can import it into your kubernetes environment by running:
 
@@ -183,13 +182,13 @@ kubectl edit deployment {deployment-name}
 kubectl logs {pod-name}
 kubectl exec -it {pod-name} -- bin/bash
 
-# Create mongo deployment
-kubectl create deployment mongo-depl --image=mongo
-kubectl logs mongo-depl-{pod-name}
-kubectl describe pod mongo-depl-{pod-name}
+# Create app deployment
+kubectl create deployment <app-name> --image=mongo
+kubectl logs <app-name>-{pod-name}
+kubectl describe pod <app-name>-{pod-name}
 
 # Delete deployment
-kubectl delete deployment mongo-depl
+kubectl delete deployment <app-name>
 kubectl delete deployment nginx-depl
 
 ```
