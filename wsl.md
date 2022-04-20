@@ -33,7 +33,6 @@ If you do need access to certain Windows applications (like `docker` and `code`)
 export PATH=$PATH:"/mnt/c/Program Files/Docker/Docker/resources/bin":"/mnt/c/ProgramData/DockerDesktop/version-bin":"/mnt/c/Users/v_capote/AppData/Local/Programs/Microsoft VS Code/bin"
 ```
 
-
 ## Mount Network Drive In WSL
 
 First make sure that a directory for the mount exists. For example, if you would like to map the 'G:' drive from Windows into WSL, you would do the following:
@@ -47,4 +46,12 @@ If you would like to make the mount permanent, add an entry for it to your `/etc
 
 ```bash
 G: /mnt/g drvfs defaults 0 0
+```
+
+## Enable Routing to VMs in Other Virutal Subnets
+
+In order to access machines running in vms connected to a different virtual switch (e.g. running ansible on a test of vagrant test machines) you need to enable the following Windows option in the registry:
+
+```powershell
+ Set-ItemProperty -Path HKLM:\system\CurrentControlSet\services\Tcpip\Parameters -Name IpEnableRouter -Value 1
 ```
