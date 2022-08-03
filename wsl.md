@@ -12,6 +12,12 @@ Get-NetAdapter | Where-Object {$_.InterfaceDescription -Match "Cisco AnyConnect"
 
 Made a script with a permenant alias based on info [here](https://stackoverflow.com/questions/24914589/how-to-create-permanent-powershell-aliases)
 
+For convenience, it is useful to make an alias in the appropriate `profile.ps1` for the verison of Powershell you are using:
+
+```powershell
+Set-Alias fix-wsl2 "<path-to-anyconnect-fix-script>"
+```
+
 ## Windows Environment Variables
 
 WSL by default likes to load in your Windows user `path` into your WSL environment... this is super annoying as it then tries to use python or any other application you've added to your Windows path in your WSL environment. Since I prefer to keep my Windows and Linux utilities seperate (with the exception being Docker and VSCode), I prefer to disable it.
