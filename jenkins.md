@@ -4,7 +4,7 @@
 
 When running Windows Build machines that need to have Desktop access (e.g. testing graphical applications), the agent needs to be run from a powershell script on startup. The user running the agent also needs to have auto-login enabled.
 
-The following powershell script grants a cuser auto-login capabilities:
+The following powershell script grants a user auto-login capabilities:
 
 ```powershell
 $RegPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
@@ -27,7 +27,7 @@ With `c:\jenkins\agent.ps1` containing:
 ```powershell
 $server = "<jenkins-server-url>"
 $secret = "<secret>"
-$hostname = (hostname).toLower()
+$node_name = "<node-name>" # To make the node name same as the host name, use: (hostname).toLower()
 
 # Make sure server is available
 $netstatus = test-connection $server -quiet
@@ -41,7 +41,7 @@ $wc = New-Object Net.WebClient
 $wc.DownloadFile("http://$server/jnlpJars/agent.jar", 'c:\jenkins\agent.jar')
 
 # Start agent
-java -jar agent.jar -jnlpUrl "http://$server/computer/$hostname/jenkins-agent.jnlp" -secret $secret -workDir "c:/jenkins"
+java -jar agent.jar -jnlpUrl "http://$server/computer/$node_name/jenkins-agent.jnlp" -secret $secret -workDir "c:/jenkins"
 ```
 
-> NOTE: Replace with swarm.jar instead in a swarm setup
+> NOTE: Replace with swarm.jar instead in a Jenkins Swarm setup
